@@ -15,7 +15,6 @@ class DataFromApi {
             .map((e) => ModelData.fromJson(e))
             .toList();
 
-        print(data);
         return data;
       }
       throw Exception("servererror");

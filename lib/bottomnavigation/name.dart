@@ -10,53 +10,38 @@ class Namebottom extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(dataprovider);
-    return Column(
-      children: [
-        SizedBox(
-          height: 20,
-        ),
-        Text(
-          "HI, My name is",
-          style: GoogleFonts.openSans(
-              color: Colors.grey, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        data.when(data: (data) {
-          return Text(
-            " ${data[index].name.first}  ${data[index].name.last}",
-            style: GoogleFonts.openSans(
-                color: Color(0xFF317874), fontWeight: FontWeight.w700),
-          );
-        }, error: (error, s) {
-          return Text("Error");
-        }, loading: () {
-          return SizedBox();
-        }),
-      ],
+    return Expanded(
+      child: ListView(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Center(
+            child: Text(
+              "HI, My name is",
+              style: GoogleFonts.openSans(
+                  color: Colors.grey, fontWeight: FontWeight.bold),
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          data.when(data: (data) {
+            return Center(
+              child: Text(
+                " ${data[index].name.first}  ${data[index].name.last}",
+                style: GoogleFonts.openSans(
+                    color: const Color(0xFF317874),
+                    fontWeight: FontWeight.w700),
+              ),
+            );
+          }, error: (error, s) {
+            return const Text("Error");
+          }, loading: () {
+            return const SizedBox();
+          }),
+        ],
+      ),
     );
   }
 }
-//   SizedBox(
-//                     height: 10,
-//                   ),
-//                   const Text("My Phone Number is"),
-//                   const SizedBox(
-//                     height: 10,
-//                   ),
-//                   data.when(data: (data) {
-//                     return Text("+91 ${data[index].phone}");
-//                   }, error: (error, s) {
-//                     return Text("Error");
-//                   }, loading: () {
-//                     return SizedBox();
-//                   }),
-//                   DividerTheme(
-//                       data: DividerThemeData(color: Colors.red),
-//                       child: Icon(Icons.call))
-//                 ],
-//               ),
-//             ),
-// ;
-//   }

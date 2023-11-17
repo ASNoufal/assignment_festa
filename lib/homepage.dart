@@ -19,13 +19,13 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: (!Responsive.isDesktop(context))
           ? AppBar(
-              backgroundColor: Color(0xFF317874),
+              backgroundColor: const Color(0xFF317874),
               actions: [
                 ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Filter"),
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xFF317874)),
+                      backgroundColor: const Color(0xFF317874)),
+                  child: const Text("Filter"),
                 )
               ],
               leading: IconButton(
@@ -62,7 +62,7 @@ class UserDetails extends ConsumerWidget {
     return Scaffold(
       body: Container(
         width: size,
-        color: Color(0xFF317874),
+        color: const Color(0xFF317874),
         child: Column(
           children: [
             const SizedBox(
@@ -117,7 +117,7 @@ class UserDetails extends ConsumerWidget {
                             return Text(
                               "Email:${data[0].email}",
                               style: GoogleFonts.openSans(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white),
                             );
@@ -246,7 +246,7 @@ class Profileuser extends ConsumerWidget {
                     Stack(
                       children: [
                         Container(
-                          color: Color(0xFF317874),
+                          color: const Color(0xFF317874),
                           width: double.infinity,
                           height: 50,
                         ),
@@ -288,7 +288,9 @@ Widget homepagecustomizedbutton({required String name, Color? color}) {
         child: Text(
       name,
       style: GoogleFonts.openSans(
-          fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF317874)),
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xFF317874)),
     )),
   );
 }

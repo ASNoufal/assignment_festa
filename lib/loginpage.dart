@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Color(0xFF317874),
+        backgroundColor: const Color(0xFF317874),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
@@ -33,9 +33,9 @@ class LoginPage extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   child: TextFormField(
                     decoration: InputDecoration(
-                        iconColor: Color(0xFF317874),
+                        iconColor: const Color(0xFF317874),
                         hintText: "email",
-                        prefixIcon: Icon(Icons.email_outlined),
+                        prefixIcon: const Icon(Icons.email_outlined),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
@@ -47,40 +47,40 @@ class LoginPage extends StatelessWidget {
                   child: TextFormField(
                     decoration: InputDecoration(
                         hintText: "password",
-                        prefixIcon: Icon(Icons.email_outlined),
-                        suffixIcon: Icon(Icons.remove_red_eye),
+                        prefixIcon: const Icon(Icons.email_outlined),
+                        suffixIcon: const Icon(Icons.remove_red_eye),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(15))),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 InkWell(
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (builder) {
-                        return HomePage();
+                        return const HomePage();
                       }));
                     },
                     child: Responsive(
                       mobile: customisedbutton(context,
                           data: "LOG IN",
-                          color: Color(0xFF317874),
+                          color: const Color(0xFF317874),
                           width: _size / 2.2,
                           height: _size / 8),
                       desktop: customisedbutton(context,
                           data: "LOG IN",
-                          color: Color(0xFF317874),
+                          color: const Color(0xFF317874),
                           width: _size / 5.5,
                           height: _size / 25),
                       tablet: customisedbutton(context,
                           data: "LOG IN",
-                          color: Color(0xFF317874),
+                          color: const Color(0xFF317874),
                           width: 200,
                           height: 50),
                     )),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Responsive(
@@ -125,7 +125,6 @@ Widget customisedbutton(
   double? width,
   double? height,
 }) {
-  final size = MediaQuery.of(context).size.width;
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30), color: color, border: border),
