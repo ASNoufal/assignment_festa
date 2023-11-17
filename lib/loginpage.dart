@@ -9,17 +9,17 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.green[900],
+        backgroundColor: Colors.green[800],
         body: Center(
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(20)),
-            width: Responsive.isMobile(context) ? _size / 1.9 : _size / 3.5,
-            height: Responsive.isMobile(context) ? _size / 1.2 : _size / 3.5,
+            width: !Responsive.isDesktop(context) ? 350 : _size / 3.5,
+            height: !Responsive.isDesktop(context) ? 400 : _size / 3.5,
             child: Column(
               children: [
                 const SizedBox(
-                  height: 60,
+                  height: 40,
                 ),
                 const Text(
                   "Log In",
@@ -53,27 +53,57 @@ class LoginPage extends StatelessWidget {
                   height: 20,
                 ),
                 InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (builder) {
-                      return HomePage();
-                    }));
-                  },
-                  child: customisedbutton(
-                    context,
-                    data: "LOG IN",
-                    color: Colors.green,
-                  ),
-                ),
+                    onTap: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (builder) {
+                        return HomePage();
+                      }));
+                    },
+                    child: Responsive(
+                      mobile: customisedbutton(context,
+                          data: "LOG IN",
+                          color: Colors.green,
+                          width: _size / 2.2,
+                          height: _size / 8),
+                      desktop: customisedbutton(context,
+                          data: "LOG IN",
+                          color: Colors.green,
+                          width: _size / 5.5,
+                          height: _size / 25),
+                      tablet: customisedbutton(context,
+                          data: "LOG IN",
+                          color: Colors.green,
+                          width: 200,
+                          height: 50),
+                    )),
                 SizedBox(
                   height: 20,
                 ),
-                customisedbutton(context,
-                    data: "Sign in with google",
-                    color: Colors.white,
-                    border: Border.all(),
-                    icon: Icons.g_mobiledata,
-                    iconsize: 30)
+                Responsive(
+                    mobile: customisedbutton(context,
+                        data: "Sign in with google",
+                        color: Colors.white,
+                        border: Border.all(),
+                        icon: Icons.g_mobiledata,
+                        iconsize: 30,
+                        width: _size / 2.2,
+                        height: _size / 8),
+                    desktop: customisedbutton(context,
+                        data: "Sign in with google",
+                        color: Colors.white,
+                        border: Border.all(),
+                        icon: Icons.g_mobiledata,
+                        iconsize: 30,
+                        width: _size / 5.5,
+                        height: _size / 25),
+                    tablet: customisedbutton(context,
+                        data: "Sign in with google",
+                        color: Colors.white,
+                        border: Border.all(),
+                        icon: Icons.g_mobiledata,
+                        iconsize: 30,
+                        width: 200,
+                        height: 50))
               ],
             ),
           ),
@@ -88,13 +118,15 @@ Widget customisedbutton(
   double? iconsize,
   BoxBorder? border,
   IconData? icon,
+  double? width,
+  double? height,
 }) {
   final size = MediaQuery.of(context).size.width;
   return Container(
     decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30), color: color, border: border),
-    width: Responsive.isDesktop(context) ? size / 5.5 : size / 2.7,
-    height: Responsive.isDesktop(context) ? size / 25 : size / 15,
+    width: width,
+    height: height,
     child: Center(
         child: Row(
       mainAxisAlignment: MainAxisAlignment.center,

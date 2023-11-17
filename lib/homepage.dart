@@ -1,7 +1,12 @@
-import 'package:assignment/infrastructure/Model/modelData.dart';
-import 'package:assignment/infrastructure/repo/datafromapi.dart';
-import 'package:assignment/loginpage.dart';
+import 'package:assignment/bottomnavigation/bottomNavigation.dart';
+import 'package:assignment/bottomnavigation/callender.dart';
+import 'package:assignment/bottomnavigation/email.dart';
+import 'package:assignment/bottomnavigation/name.dart';
+import 'package:assignment/bottomnavigation/phonenumber.dart';
+import 'package:assignment/bottomnavigation/search.dart';
+
 import 'package:assignment/provider/providers.dart';
+import 'package:assignment/utl/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,10 +16,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: (!Responsive.isDesktop(context))
+          ? AppBar(
+              actions: [
+                  ElevatedButton(onPressed: () {}, child: const Text("Filter"))
+                ],
+              leading: IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (builder) {
+                      return const Expanded(child: UserDetails());
+                    }));
+                  },
+                  icon: const Icon(Icons.api_sharp)))
+          : null,
       body: Row(
         children: [
-          Expanded(flex: 1, child: UserDetails()),
-          Expanded(
+          if (Responsive.isDesktop(context))
+            const Expanded(flex: 1, child: UserDetails()),
+          const Expanded(
               flex: 3,
               child: Profile(
                 crossAxisCount: 2,
@@ -32,100 +52,102 @@ class UserDetails extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(dataprovider);
     final size = MediaQuery.of(context).size.width;
-    return Container(
-      width: size,
-      height: size,
-      color: Colors.red,
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 150,
-          ),
-          CircleAvatar(
-            radius: 100,
-            backgroundImage: data.when(data: ((data) {
-              return NetworkImage(data[0].picture.medium!);
-            }), error: ((error, stackTrace) {
-              return;
-            }), loading: () {
-              return;
-            }),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Consumer(builder: ((context, ref, _) {
-            final data = ref.watch(dataprovider);
-            print(data);
-            return data.when(
-                data: (data) {
-                  if (data.isNotEmpty) {
-                    return Text(data[0].name.first!);
-                  } else {
-                    return Text("No data available");
-                  }
-                },
-                error: (error, s) {
-                  return Text("error");
-                },
-                loading: () => SizedBox());
-          })),
-          const SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 30),
-            child: Consumer(builder: (context, ref, _) {
+    return Scaffold(
+      body: Container(
+        width: size,
+        color: Colors.green[800],
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 100,
+            ),
+            CircleAvatar(
+              radius: 100,
+              backgroundImage: data.when(data: ((data) {
+                return NetworkImage(data[0].picture.medium!);
+              }), error: ((error, stackTrace) {
+                return;
+              }), loading: () {
+                return;
+              }),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Consumer(builder: ((context, ref, _) {
               final data = ref.watch(dataprovider);
-              return Align(
-                  alignment: Alignment.centerLeft,
-                  child: data.when(
-                      data: (data) {
-                        if (data.isNotEmpty) {
-                          return Text("Email:${data[0].email}");
-                        } else {
-                          return Text("No data available");
-                        }
-                      },
-                      error: (error, s) {
-                        return Text("error");
-                      },
-                      loading: () => SizedBox()));
-            }),
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 30),
-            child: Consumer(builder: (context, ref, _) {
-              return Align(
-                  alignment: Alignment.centerLeft,
-                  child: data.when(
-                      data: (data) {
-                        if (data.isNotEmpty) {
-                          return Text("Phone: +91 ${data[0].phone}");
-                        } else {
-                          return Text("No data available");
-                        }
-                      },
-                      error: (error, s) {
-                        return Text("error");
-                      },
-                      loading: () => SizedBox()));
-            }),
-          ),
-          const SizedBox(
-            height: 90,
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child:
-                homepagecustomizedbutton(name: "Signout", color: Colors.green),
-          )
-        ],
+              return data.when(
+                  data: (data) {
+                    if (data.isNotEmpty) {
+                      return Text(
+                        data[0].name.first!,
+                      );
+                    } else {
+                      return const Text("No data available");
+                    }
+                  },
+                  error: (error, s) {
+                    return const Text("error");
+                  },
+                  loading: () => const SizedBox());
+            })),
+            const SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Consumer(builder: (context, ref, _) {
+                final data = ref.watch(dataprovider);
+                return Align(
+                    alignment: Alignment.centerLeft,
+                    child: data.when(
+                        data: (data) {
+                          if (data.isNotEmpty) {
+                            return Text("Email:${data[0].email}");
+                          } else {
+                            return const Text("No data available");
+                          }
+                        },
+                        error: (error, s) {
+                          return const Text("error");
+                        },
+                        loading: () => const SizedBox()));
+              }),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30),
+              child: Consumer(builder: (context, ref, _) {
+                return Align(
+                    alignment: Alignment.centerLeft,
+                    child: data.when(
+                        data: (data) {
+                          if (data.isNotEmpty) {
+                            return Text("Phone: +91 ${data[0].phone}");
+                          } else {
+                            return const Text("No data available");
+                          }
+                        },
+                        error: (error, s) {
+                          return const Text("error");
+                        },
+                        loading: () => const SizedBox()));
+              }),
+            ),
+            SizedBox(
+              height: Responsive.isDesktop(context) ? 130 : 160,
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: homepagecustomizedbutton(
+                  name: "Signout", color: Colors.white),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -141,16 +163,24 @@ class Profile extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.only(right: 30, top: 10),
-          child: Align(
-              alignment: Alignment.bottomRight,
-              child: homepagecustomizedbutton(
-                  name: "FILTER", color: Colors.amber[50])),
+          child: (Responsive.isDesktop(context))
+              ? Align(
+                  alignment: Alignment.bottomRight,
+                  child: homepagecustomizedbutton(
+                      name: "FILTER", color: Colors.amber[50]))
+              : const SizedBox(),
         ),
-        Expanded(
+        const Expanded(
           child: Padding(
-              padding: const EdgeInsets.only(
-                  left: 90, top: 20, bottom: 10, right: 30),
-              child: Profileuser()),
+              padding:
+                  EdgeInsets.only(left: 50, top: 20, bottom: 10, right: 30),
+              child: Responsive(
+                  mobile: Profileuser(
+                    childAspectRatio: 1,
+                    crossAxisCount: 1,
+                  ),
+                  desktop: Profileuser(),
+                  tablet: Profileuser())),
         ),
       ],
     );
@@ -158,65 +188,69 @@ class Profile extends StatelessWidget {
 }
 
 class Profileuser extends ConsumerWidget {
-  const Profileuser({super.key});
+  final int crossAxisCount;
+  final double childAspectRatio;
+  const Profileuser(
+      {super.key, this.childAspectRatio = 2, this.crossAxisCount = 2});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2,
+            crossAxisCount: crossAxisCount,
+            childAspectRatio: childAspectRatio,
             crossAxisSpacing: 50,
             mainAxisSpacing: 20),
         itemCount: 6,
         itemBuilder: (context, index) {
-          final data = ref.watch(dataprovider);
-          return Container(
-            decoration: BoxDecoration(border: Border.all()),
-            child: Column(
-              children: [
-                Stack(
-                  children: [
-                    Container(
-                      color: Colors.red,
-                      width: double.infinity,
-                      height: 50,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 180, top: 10),
-                      child: CircleAvatar(
-                        backgroundImage: data.when(data: (data) {
-                          return NetworkImage(data[index].picture.thumbnail!);
-                        }, error: (error, s) {
-                          return;
-                        }, loading: () {
-                          return;
-                        }),
-                        radius: 40,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                const Text("My Phone Number is"),
-                const SizedBox(
-                  height: 10,
-                ),
-                data.when(data: (data) {
-                  return Text("+91 ${data[index].phone}");
-                }, error: (error, s) {
-                  return Text("Error");
-                }, loading: () {
-                  return SizedBox();
-                }),
-                DividerTheme(
-                    data: DividerThemeData(color: Colors.red),
-                    child: Icon(Icons.call))
-              ],
+          final widget = [
+            Namebottom(
+              index: index,
             ),
-          );
+            const Emailbottom(),
+            const CallenderBottom(),
+            const SearchBottom(),
+            PhoneNumberBottom(
+              index: index,
+            ),
+          ];
+          final data = ref.watch(dataprovider);
+          return Scaffold(
+              bottomNavigationBar: BottomNavigation(),
+              body: Container(
+                  decoration: BoxDecoration(border: Border.all()),
+                  child: Column(children: [
+                    Stack(
+                      children: [
+                        Container(
+                          color: Colors.green[800],
+                          width: double.infinity,
+                          height: 50,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 20),
+                          child: Center(
+                            child: CircleAvatar(
+                              backgroundImage: data.when(data: (data) {
+                                return NetworkImage(
+                                    data[index].picture.thumbnail!);
+                              }, error: (error, s) {
+                                return;
+                              }, loading: () {
+                                return;
+                              }),
+                              radius: 40,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    ValueListenableBuilder(
+                        valueListenable: indexvalue,
+                        builder: (context, newvalue, _) {
+                          return widget[newvalue];
+                        }),
+                  ])));
         });
   }
 }
