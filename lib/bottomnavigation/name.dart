@@ -10,38 +10,35 @@ class Namebottom extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final data = ref.watch(dataprovider);
-    return Expanded(
-      child: ListView(
-        children: [
-          const SizedBox(
-            height: 20,
+    return Column(
+      children: [
+        const SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: Text(
+            "HI, My name is",
+            style: GoogleFonts.openSans(
+                color: Colors.grey, fontWeight: FontWeight.bold),
           ),
-          Center(
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        data.when(data: (data) {
+          return Center(
             child: Text(
-              "HI, My name is",
+              " ${data[index].name.first}  ${data[index].name.last}",
               style: GoogleFonts.openSans(
-                  color: Colors.grey, fontWeight: FontWeight.bold),
+                  color: const Color(0xFF317874), fontWeight: FontWeight.w700),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          data.when(data: (data) {
-            return Center(
-              child: Text(
-                " ${data[index].name.first}  ${data[index].name.last}",
-                style: GoogleFonts.openSans(
-                    color: const Color(0xFF317874),
-                    fontWeight: FontWeight.w700),
-              ),
-            );
-          }, error: (error, s) {
-            return const Text("Error");
-          }, loading: () {
-            return const SizedBox();
-          }),
-        ],
-      ),
+          );
+        }, error: (error, s) {
+          return const Text("Error");
+        }, loading: () {
+          return const SizedBox();
+        }),
+      ],
     );
   }
 }
