@@ -9,6 +9,7 @@ import 'package:assignment/provider/providers.dart';
 import 'package:assignment/utl/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -18,9 +19,15 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: (!Responsive.isDesktop(context))
           ? AppBar(
+              backgroundColor: Color(0xFF317874),
               actions: [
-                  ElevatedButton(onPressed: () {}, child: const Text("Filter"))
-                ],
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text("Filter"),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xFF317874)),
+                )
+              ],
               leading: IconButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -55,7 +62,7 @@ class UserDetails extends ConsumerWidget {
     return Scaffold(
       body: Container(
         width: size,
-        color: Colors.green[800],
+        color: Color(0xFF317874),
         child: Column(
           children: [
             const SizedBox(
@@ -80,7 +87,11 @@ class UserDetails extends ConsumerWidget {
                   data: (data) {
                     if (data.isNotEmpty) {
                       return Text(
-                        data[0].name.first!,
+                        "${data[0].name.first!} ${data[0].name.last}",
+                        style: GoogleFonts.openSans(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
                       );
                     } else {
                       return const Text("No data available");
@@ -103,7 +114,13 @@ class UserDetails extends ConsumerWidget {
                     child: data.when(
                         data: (data) {
                           if (data.isNotEmpty) {
-                            return Text("Email:${data[0].email}");
+                            return Text(
+                              "Email:${data[0].email}",
+                              style: GoogleFonts.openSans(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            );
                           } else {
                             return const Text("No data available");
                           }
@@ -125,7 +142,13 @@ class UserDetails extends ConsumerWidget {
                     child: data.when(
                         data: (data) {
                           if (data.isNotEmpty) {
-                            return Text("Phone: +91 ${data[0].phone}");
+                            return Text(
+                              "Phone: +91 ${data[0].phone}",
+                              style: GoogleFonts.openSans(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            );
                           } else {
                             return const Text("No data available");
                           }
@@ -144,7 +167,7 @@ class UserDetails extends ConsumerWidget {
                 Navigator.pop(context);
               },
               child: homepagecustomizedbutton(
-                  name: "Signout", color: Colors.white),
+                  name: "LOG OUT", color: Colors.white),
             )
           ],
         ),
@@ -223,7 +246,7 @@ class Profileuser extends ConsumerWidget {
                     Stack(
                       children: [
                         Container(
-                          color: Colors.green[800],
+                          color: Color(0xFF317874),
                           width: double.infinity,
                           height: 50,
                         ),
@@ -261,6 +284,11 @@ Widget homepagecustomizedbutton({required String name, Color? color}) {
     height: 50,
     decoration:
         BoxDecoration(borderRadius: BorderRadius.circular(10), color: color),
-    child: Center(child: Text(name)),
+    child: Center(
+        child: Text(
+      name,
+      style: GoogleFonts.openSans(
+          fontSize: 15, fontWeight: FontWeight.bold, color: Color(0xFF317874)),
+    )),
   );
 }

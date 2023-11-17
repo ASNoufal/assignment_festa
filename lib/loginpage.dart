@@ -9,7 +9,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _size = MediaQuery.of(context).size.width;
     return Scaffold(
-        backgroundColor: Colors.green[800],
+        backgroundColor: Color(0xFF317874),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
@@ -23,13 +23,17 @@ class LoginPage extends StatelessWidget {
                 ),
                 const Text(
                   "Log In",
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF317874)),
                 ),
                 Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                   child: TextFormField(
                     decoration: InputDecoration(
+                        iconColor: Color(0xFF317874),
                         hintText: "email",
                         prefixIcon: Icon(Icons.email_outlined),
                         border: OutlineInputBorder(
@@ -62,17 +66,17 @@ class LoginPage extends StatelessWidget {
                     child: Responsive(
                       mobile: customisedbutton(context,
                           data: "LOG IN",
-                          color: Colors.green,
+                          color: Color(0xFF317874),
                           width: _size / 2.2,
                           height: _size / 8),
                       desktop: customisedbutton(context,
                           data: "LOG IN",
-                          color: Colors.green,
+                          color: Color(0xFF317874),
                           width: _size / 5.5,
                           height: _size / 25),
                       tablet: customisedbutton(context,
                           data: "LOG IN",
-                          color: Colors.green,
+                          color: Color(0xFF317874),
                           width: 200,
                           height: 50),
                     )),
